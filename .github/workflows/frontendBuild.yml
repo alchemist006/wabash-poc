@@ -1,0 +1,34 @@
+name: Docker Workflow
+
+on:
+  push:
+    branches:
+      - master
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v2
+        with:
+          node-version: '18.2.0'
+
+      - name: Install dependencies
+        run: npm install
+
+      - name: Build Docker image
+        run: |
+          docker build . -t ${{ secrets.DOCKER_USERNAME }}/wabash-github-actions-poc:latest
+
+      - name: Push Docker image to Docker Hub
+        run: |
+          echo ${{ secrets.DOCKER_PASSWORD }} | docker login your-registry-url -u ${{ secrets.DOCKER_USERNAME }} --password-stdin
+          docker push ${{ secrets.DOCKER_USERNAME }}/wabash-github-actions-poc:latest
+
+      - name: Run tests
+        run: docker run -it ${{ secrets.DOCKER_USERNAME }}/wabash-github-actions-poc npm test

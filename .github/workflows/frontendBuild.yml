@@ -31,4 +31,4 @@ jobs:
           docker push ${{ secrets.DOCKER_USERNAME }}/wabash-github-actions-poc:latest
 
       - name: Run tests
-        run: docker run -it ${{ secrets.DOCKER_USERNAME }}/wabash-github-actions-poc npm test
+        run: docker run -t ${{ secrets.DOCKER_USERNAME }}/wabash-github-actions-poc npm test

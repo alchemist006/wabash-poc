@@ -30,7 +30,7 @@ jobs:
           docker push ${{ secrets.DOCKER_USERNAME }}/${{ vars.DOCKER_IMAGE_NAME }}:${{vars.REPOSITORY_VERSION}}
 
     #   - name: Remove all cached Docker images
-    #     run: docker system prune -af
+    #     run: docker system prune -af 
 
       - name: Run tests
         run: docker run -t ${{ secrets.DOCKER_USERNAME }}/${{ vars.DOCKER_IMAGE_NAME }} npm test

@@ -26,7 +26,7 @@ jobs:
 
       - name: Push Docker image to Docker Hub
         run: |
-          echo ${{ secrets.DOCKER_PASSWORD }} | docker login ${{ vars.REGISTRY_URL}} -u ${{ vars.REPOSITORY_URL }} --password-stdin
+          echo ${{ secrets.DOCKER_PASSWORD }} | docker login ${{ vars.REGISTRY_URL}} -u ${{ vars.DOCKER_USERNAME }} --password-stdin
           docker push ${{ secrets.DOCKER_USERNAME }}/${{ vars.DOCKER_IMAGE_NAME }}:${{vars.REPOSITORY_VERSION}}
 
     #   - name: Remove all cached Docker images

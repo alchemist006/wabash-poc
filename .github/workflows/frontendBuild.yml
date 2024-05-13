@@ -23,12 +23,15 @@ jobs:
 
       - name: Build Docker image
         run: |
-          docker build . -t ${{ secrets.DOCKER_USERNAME }}/wabash-github-actions-poc:latest
+          docker build . -t ${{ secrets.DOCKER_USERNAME }}/${{ env.DOCKER_IMAGE_NAME }}:${{ env.REPOSITORY_VERSION}}
 
       - name: Push Docker image to Docker Hub
         run: |
-          echo ${{ secrets.DOCKER_PASSWORD }} | docker login https://index.docker.io/v1/ -u ${{ secrets.DOCKER_USERNAME }} --password-stdin
-          docker push ${{ secrets.DOCKER_USERNAME }}/wabash-github-actions-poc:latest
+          echo ${{ secrets.DOCKER_PASSWORD }} | docker login ${{ env.REGISTERY_URL}} -u ${{ secrets.DOCKER_USERNAME }} --password-stdin
+          docker push ${{ secrets.DOCKER_USERNAME }}/${{ env.DOCKER_IMAGE_NAME }}:${{ env.REPOSITORY_VERSION}}
+
+    #   - name: Remove all cached Docker images
+    #     run: docker system prune -af
 
       - name: Run tests
-        run: docker run -t ${{ secrets.DOCKER_USERNAME }}/wabash-github-actions-poc npm test
+        run: docker run -t ${{ secrets.DOCKER_USERNAME }}/${{ env.DOCKER_IMAGE_NAME }} npm test

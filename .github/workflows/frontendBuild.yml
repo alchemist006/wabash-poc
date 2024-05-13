@@ -27,7 +27,7 @@ jobs:
 
       - name: Push Docker image to Docker Hub
         run: |
-          echo ${{ secrets.DOCKER_PASSWORD }} | docker login your-registry-url -u ${{ secrets.DOCKER_USERNAME }} --password-stdin
+          echo ${{ secrets.DOCKER_PASSWORD }} | docker login https://index.docker.io/v1/ -u ${{ secrets.DOCKER_USERNAME }} --password-stdin
           docker push ${{ secrets.DOCKER_USERNAME }}/wabash-github-actions-poc:latest
 
       - name: Run tests
